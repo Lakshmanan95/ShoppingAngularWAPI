@@ -11,4 +11,5 @@ import com.example.eshopping.entity.Pincode;
 public interface PincodeRepository extends CrudRepository<Pincode, Long>{
 
 	List<Pincode> findAll();
+	Pincode findByPinCode(String pinCode);
 }

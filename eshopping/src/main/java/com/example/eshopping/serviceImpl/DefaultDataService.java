@@ -46,4 +46,8 @@ public class DefaultDataService implements DefaultService{
 	public List<Pincode> getPincode(){
 		return this.pincodeRepository.findAll();
 	}
+	
+	public Pincode getMatchCode(String pinCode) {
+		return this.pincodeRepository.findByPinCode(pinCode);
+	}
 }

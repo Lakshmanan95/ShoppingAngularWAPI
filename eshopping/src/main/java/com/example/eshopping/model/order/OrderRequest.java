@@ -11,6 +11,7 @@ public class OrderRequest {
 	OrderMaster order;
 	List<Cart> cart;
 	private int userId;
+	List<UpdateOrder> updateOrder;
 
 	public OrderMaster getOrder() {
 		return order;
@@ -34,6 +35,14 @@ public class OrderRequest {
 
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+
+	public List<UpdateOrder> getUpdateOrder() {
+		return updateOrder;
+	}
+
+	public void setUpdateOrder(List<UpdateOrder> updateOrder) {
+		this.updateOrder = updateOrder;
 	}
 	
 	

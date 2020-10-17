@@ -8,6 +8,7 @@ import com.example.eshopping.entity.Pincode;
 public class PinCodeResponse extends BaseResponse{
 
 	List<Pincode> pincode;
+	boolean pincodeMatched;
 
 	public List<Pincode> getPincode() {
 		return pincode;
@@ -15,6 +16,14 @@ public class PinCodeResponse extends BaseResponse{
 
 	public void setPincode(List<Pincode> pincode) {
 		this.pincode = pincode;
+	}
+
+	public boolean isPincodeMatched() {
+		return pincodeMatched;
+	}
+
+	public void setPincodeMatched(boolean pincodeMatched) {
+		this.pincodeMatched = pincodeMatched;
 	}
 	
 	

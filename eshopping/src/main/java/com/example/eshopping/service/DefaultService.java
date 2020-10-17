@@ -17,4 +17,5 @@ public interface DefaultService {
 	
 	public List<Pincode> getPincode();
 	
+	public Pincode getMatchCode(String pinCode);
 }

@@ -8,6 +8,7 @@ public class ProductDetailsRequest {
 	private String location;
 	private int pageNumber;
 	private int noOfItems;
+	private int sort;
 	
 	public String getMainCategory() {
 		return mainCategory;
@@ -44,6 +45,12 @@ public class ProductDetailsRequest {
 	}
 	public void setNoOfItems(int noOfItems) {
 		this.noOfItems = noOfItems;
+	}
+	public int getSort() {
+		return sort;
+	}
+	public void setSort(int sort) {
+		this.sort = sort;
 	}
 	
 	

@@ -4,10 +4,11 @@ import java.util.List;
 
 import com.example.eshopping.entity.Product;
 import com.example.eshopping.model.product.ProductDetailsRequest;
+import com.example.eshopping.model.product.ProductResponse;
 
 public interface ProductDAO {
 
-	public List<Product> getProduct(String location);
+	public ProductResponse getProduct(String location, int sort);
 	
-	public List<Product> getProductBasedOnCategory(ProductDetailsRequest request);
+	public ProductResponse getProductBasedOnCategory(ProductDetailsRequest request);
 }

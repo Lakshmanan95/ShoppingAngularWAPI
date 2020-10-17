@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.eshopping.entity.Product;
 import com.example.eshopping.model.product.ProductDetailsRequest;
+import com.example.eshopping.model.product.ProductResponse;
 
 public interface ProductService {
 
@@ -13,9 +14,9 @@ public interface ProductService {
 	
 	public Product getProductByNameAndProductLocation(String name,String location);
 	
-	public List<Product> getProductByLocation(String location);
+	public ProductResponse getProductByLocation(String location, int sort);
 	
 	public List<Product> getProduct();
 	
-	public List<Product> getProductBasedOnCategory(ProductDetailsRequest request);
+	public ProductResponse getProductBasedOnCategory(ProductDetailsRequest request);
 }

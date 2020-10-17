@@ -6,6 +6,7 @@ public class ProductRequest {
 
 	private Product product;
 	private String location;
+	private int sort;
 
 	public Product getProduct() {
 		return product;
@@ -21,6 +22,14 @@ public class ProductRequest {
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+
+	public int getSort() {
+		return sort;
+	}
+
+	public void setSort(int sort) {
+		this.sort = sort;
 	}
 	
 	

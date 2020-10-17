@@ -3,6 +3,7 @@ package com.example.eshopping.service;
 import java.util.List;
 
 import com.example.eshopping.entity.OrderDetails;
+import com.example.eshopping.entity.OrderFile;
 import com.example.eshopping.entity.OrderMaster;
 
 public interface OrderDetailService {
@@ -20,4 +21,8 @@ public interface OrderDetailService {
 	public List<OrderMaster> getOrderMasterByUserId(int userId);
 	
 	public List<OrderDetails> getOrderDetailsByOrderId(int orderId);
+	
+	public OrderFile saveOrderFile(OrderFile orderFile);
+	
+	public List<OrderFile> findByOrderId(int orderId);
 }

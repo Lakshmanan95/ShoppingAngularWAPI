@@ -81,12 +81,7 @@ public class ProductController {
 	public ProductResponse getProduct(@RequestBody ProductRequest request) {
 		ProductResponse response = new ProductResponse();
 		try {
-			List<Product> product = new ArrayList();
-			if(request.getLocation().isEmpty())
-				product = productService.getProductByLocation(null);
-			else
-				product = productService.getProductByLocation(request.getLocation());
-			response.setProductList(product);
+			response = productService.getProductByLocation(null, request.getSort());
 			response.setStatus(CommonConstant.SUCCESS);
 		}
 		catch(Exception e) {
@@ -117,8 +112,7 @@ public class ProductController {
 	public ProductResponse getProductById(@RequestBody ProductDetailsRequest request) {
 		ProductResponse response = new ProductResponse();
 		try {
-			List<Product> product = productService.getProductBasedOnCategory(request);
-			response.setProductList(product);
+			response = productService.getProductBasedOnCategory(request);
 			response.setStatus(CommonConstant.SUCCESS);
 		}
 		catch(Exception e) {

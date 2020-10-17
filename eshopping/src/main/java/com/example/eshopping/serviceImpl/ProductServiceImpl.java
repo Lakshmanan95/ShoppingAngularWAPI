@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.eshopping.dao.ProductDAO;
 import com.example.eshopping.entity.Product;
 import com.example.eshopping.model.product.ProductDetailsRequest;
+import com.example.eshopping.model.product.ProductResponse;
 import com.example.eshopping.repo.ProductRepository;
 import com.example.eshopping.service.ProductService;
 
@@ -36,8 +37,8 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
-	public List<Product> getProductByLocation(String location){
-		return this.productDAO.getProduct(location);
+	public ProductResponse getProductByLocation(String location, int sort){
+		return this.productDAO.getProduct(location, sort);
 	}
 	
 	@Override
@@ -46,7 +47,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
-	public List<Product> getProductBasedOnCategory(ProductDetailsRequest request){
+	public ProductResponse getProductBasedOnCategory(ProductDetailsRequest request){
 		return this.productDAO.getProductBasedOnCategory(request);
 	}
 	

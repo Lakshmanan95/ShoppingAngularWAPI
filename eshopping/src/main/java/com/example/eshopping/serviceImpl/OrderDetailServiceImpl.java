@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.example.eshopping.dao.OrderDetailDAO;
 import com.example.eshopping.entity.OrderDetails;
+import com.example.eshopping.entity.OrderFile;
 import com.example.eshopping.entity.OrderMaster;
 import com.example.eshopping.repo.OrderDetailRepository;
+import com.example.eshopping.repo.OrderFileRepository;
 import com.example.eshopping.repo.OrderMasterRepository;
 import com.example.eshopping.service.OrderDetailService;
 
@@ -23,6 +25,9 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 	
 	@Autowired
 	OrderMasterRepository orderMasterRepository;
+	
+	@Autowired
+	OrderFileRepository orderFileRepository;
 	
 	public OrderDetails saveOrder(OrderDetails order) {
 		return this.orderRepository.save(order);
@@ -53,6 +58,16 @@ public class OrderDetailServiceImpl implements OrderDetailService{
 	@Override
 	public List<OrderDetails> getOrderDetailsByOrderId(int orderId){
 		return this.orderRepository.findByOrderId(orderId);
+	}
+	
+	@Override
+	public OrderFile saveOrderFile(OrderFile orderFile) {
+		return this.orderFileRepository.save(orderFile);
+	}
+	
+	@Override
+	public List<OrderFile> findByOrderId(int orderId){
+		return this.orderFileRepository.findByOrderId(orderId);
 	}
 }
 

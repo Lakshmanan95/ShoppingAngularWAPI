@@ -82,4 +82,19 @@ public class DefaultDataController {
 		}
 		return response;
 	}
+	
+	@GetMapping("/searchPinCode/{value}")
+	public  PinCodeResponse getPinCodeMatched() {
+		PinCodeResponse response = new PinCodeResponse();
+		try {
+			List<Pincode> pinCode = defaultService.getPincode();
+			response.setPincode(pinCode);
+		}
+		catch(Exception e) {
+			System.out.println(e);
+			response.setStatus(CommonConstant.ERROR);
+		}
+		return response;
+	}
+	
 }

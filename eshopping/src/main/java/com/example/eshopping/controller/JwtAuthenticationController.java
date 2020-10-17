@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.eshopping.common.BaseResponse;
 import com.example.eshopping.common.CommonConstant;
 import com.example.eshopping.config.JwtTokenUtil;
+import com.example.eshopping.entity.Pincode;
 import com.example.eshopping.entity.Roles;
 import com.example.eshopping.entity.User;
 import com.example.eshopping.model.user.EmailExistResponse;
@@ -29,6 +30,7 @@ import com.example.eshopping.model.user.RoleResponse;
 import com.example.eshopping.model.user.UserRequest;
 import com.example.eshopping.model.user.UserResponse;
 import com.example.eshopping.model.user.UserUpdateRequest;
+import com.example.eshopping.service.DefaultService;
 import com.example.eshopping.service.UserService;
 import com.example.eshopping.util.EncryptDecrypt;
 import com.example.eshopping.util.JSONUtil;
@@ -49,6 +51,8 @@ public class JwtAuthenticationController {
 	UserService userService;
 	
 
+	@Autowired
+	DefaultService defaultService;
 		
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
@@ -109,6 +113,13 @@ long count=1;
 					}
 					String encodedPassword = EncryptDecrypt.encrypt(request.getUser().getPassword());
 					request.getUser().setPassword(encodedPassword);
+					Pincode pin = defaultService.getMatchCode(request.getUser().getLocation());
+					if(pin == null) {
+						response.setMessage("Please Enter valid Postal Code");
+						response.setStatus(CommonConstant.ERROR);
+						response.setStatusCode(01);
+						return response;
+					}
 					registerUser = userService.saveUser(request.getUser());
 					System.out.println(JSONUtil.toJson(registerUser));
 					if(registerUser == null) {
