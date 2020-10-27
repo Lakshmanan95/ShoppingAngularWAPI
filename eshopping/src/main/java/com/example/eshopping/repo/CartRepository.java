@@ -19,5 +19,5 @@ public interface CartRepository extends CrudRepository<Cart, Long>{
 	
 	Cart findById(int id);
 	
-	Cart findByUserIdAndProductId(int userId, int productId);
+	Cart findByProductIdAndUserId(int productId, int userId);
 }

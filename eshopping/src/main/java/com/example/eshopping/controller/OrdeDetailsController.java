@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.eshopping.common.CommonConstant;
+import com.example.eshopping.entity.Address;
 import com.example.eshopping.entity.Cart;
 import com.example.eshopping.entity.OrderDetails;
 import com.example.eshopping.entity.OrderFile;
@@ -27,6 +28,7 @@ import com.example.eshopping.model.order.OrderFinal;
 import com.example.eshopping.model.order.OrderRequest;
 import com.example.eshopping.model.order.OrderResponse;
 import com.example.eshopping.model.order.UpdateOrder;
+import com.example.eshopping.service.AddressService;
 import com.example.eshopping.service.CartService;
 import com.example.eshopping.service.DefaultService;
 import com.example.eshopping.service.OrderDetailService;
@@ -53,11 +55,15 @@ public class OrdeDetailsController {
 	@Autowired
 	CartService cartService;
 	
+	@Autowired
+	AddressService addressService;
+	
 	@PostMapping("/saveOrder")
 	public OrderResponse saveOrder(@RequestBody OrderRequest request) {
 		OrderResponse response = new OrderResponse();
 		try {
-			Pincode pin = defaultService.getMatchCode(request.getOrder().getZipCode());
+			Address address = addressService.getAddressById(request.getAddressId());
+			Pincode pin = defaultService.getMatchCode(address.getZipCode());
 			if(pin == null) {
 				response.setMessage("Please Enter valid Postal Code");
 				response.setStatus(CommonConstant.ERROR);
@@ -70,13 +76,13 @@ public class OrdeDetailsController {
 			orderMaster.setPaymentMethod(request.getOrder().getPaymentMethod());
 			orderMaster.setUserId(request.getOrder().getUserId());
 			orderMaster.setCustomerName(request.getOrder().getCustomerName());
-			orderMaster.setAddress(request.getOrder().getAddress());
-			orderMaster.setCity(request.getOrder().getCity());
-			orderMaster.setState(request.getOrder().getState());
-			orderMaster.setCountry(request.getOrder().getCountry());
-			orderMaster.setZipCode(request.getOrder().getZipCode());
+			orderMaster.setAddress(address.getAddress1()+" "+address.getAddress2());
+			orderMaster.setCity(address.getCity());
+			orderMaster.setState(address.getState());
+			orderMaster.setCountry("Malaysia");
+			orderMaster.setZipCode(address.getZipCode());
 			orderMaster.setEmail(request.getOrder().getEmail());
-			orderMaster.setPhoneNumber(request.getOrder().getPhoneNumber());
+			orderMaster.setPhoneNumber(address.getPhoneNumber());
 			orderMaster = orderDetailService.saveOrderMaster(orderMaster);
 			double totalPrice = 0;
 			for(Cart cart : request.getCart()) {

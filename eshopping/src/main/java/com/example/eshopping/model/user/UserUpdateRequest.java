@@ -2,16 +2,16 @@ package com.example.eshopping.model.user;
 
 public class UserUpdateRequest {
 
-	private String id;
+	private int id;
 	private String username;
 	private String email;
 	private int role;
 	
 	
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getUsername() {

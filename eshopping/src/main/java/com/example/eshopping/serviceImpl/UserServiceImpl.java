@@ -1,5 +1,6 @@
 package com.example.eshopping.serviceImpl;
 
+import com.example.eshopping.dao.impl.UserDAOImpl;
 import com.example.eshopping.entity.Roles;
 import com.example.eshopping.entity.User;
 import com.example.eshopping.repo.RoleRepository;
@@ -16,6 +17,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	UserDAOImpl userDAO;
 	
 	@Autowired
 	RoleRepository roleRepository;
@@ -46,14 +50,18 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User findUserById(String id) {
-		return userRepository.findById(id);
+	public User findUserById(int id) {
+		return userDAO.getUserById(id);
 	}
 	
 	@Override
 	public List<Roles> getRoles(){
 		return roleRepository.findAll();
+		
 	}
+	
+	
+	
 //	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 //		if ("javainuse".equals(username)) {
 //			return new User("javainuse", "$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6",

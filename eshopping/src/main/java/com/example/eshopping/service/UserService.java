@@ -20,7 +20,7 @@ public interface UserService {
 	
 	public List<User> findAllUsers();
 	
-	public User findUserById(String id);
+	public User findUserById(int id);
 	
 	public List<Roles> getRoles();
 	

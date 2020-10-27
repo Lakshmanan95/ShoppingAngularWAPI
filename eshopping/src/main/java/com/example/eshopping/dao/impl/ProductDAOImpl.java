@@ -24,17 +24,21 @@ public class ProductDAOImpl implements ProductDAO{
 	@Override
 	public ProductResponse getProduct(String location, int sort){
 		ProductResponse response = new ProductResponse();
-		String query = "Select * from product";
-//		if(location != null)
-//			query+=" where location ='"+location+"' OR location = ";
+		
+		String query = "select * from product p where p.EXTERNAL_SHOP = 0 ";
+		if(location != null) {
+			query+=" or location='"+location+"'";
+		}
 		if(sort == 0) {
 			query+=" order by price asc ";
 		}
 		else {
 			query+=" order by price desc ";
 		}
+		System.out.println("Count "+query);
+		String queryToCount = "select count(*) from product p where p.EXTERNAL_SHOP = 0 ";
 		query+=" limit 0,12";
-		int count = jdbcTemplate.queryForObject("Select count(*) from product", Integer.class);
+		int count = jdbcTemplate.queryForObject(queryToCount, Integer.class);
 		List<Product> state = jdbcTemplate.query(query, new BeanPropertyRowMapper(Product.class));
 		response.setProductList(state);
 		response.setCount(count);
@@ -44,12 +48,13 @@ public class ProductDAOImpl implements ProductDAO{
 	@Override
 	public ProductResponse getProductBasedOnCategory(ProductDetailsRequest request){
 		ProductResponse response = new ProductResponse();
-		String query = "Select * from product ";
-		String countQuery = "Select Count(*) from product ";
+		String query = "select * from product p where (EXTERNAL_SHOP = 0 or location='"+request.getLocation()+"')";
+		String countQuery = "select count(*) from product p where (EXTERNAL_SHOP = 0 or location='"+request.getLocation()+"')";
 		if(request.getMainCategory() != null && !request.getMainCategory().isEmpty()) {
-			query+= "where main_category ='"+request.getMainCategory()+"' ";
-			countQuery+= "where main_category ='"+request.getMainCategory()+"' ";
+			query+= " and main_category ='"+request.getMainCategory()+"' ";
+			countQuery+= " and main_category ='"+request.getMainCategory()+"' ";
 		}
+		
 		if(request.getSubCategory() != null && !request.getSubCategory().isEmpty()) {
 			query+= " and sub_category ='"+request.getSubCategory()+"' ";
 			countQuery+= " and sub_category ='"+request.getSubCategory()+"' ";
@@ -58,25 +63,23 @@ public class ProductDAOImpl implements ProductDAO{
 			query+= " and mini_category ='"+request.getMiniCategory()+"' ";
 			countQuery+= " and mini_category ='"+request.getMiniCategory()+"' ";
 		}
-			
-		if(request.getLocation() != null && !request.getLocation().isEmpty()) {
-			query+= " and location ='"+request.getLocation()+"'";
-			countQuery+= " and location ='"+request.getLocation()+"'";
-		}
+		
 		if(request.getSort() == 0) {
 			query+=" order by price asc ";
 		}
 		else {
 			query+=" order by price desc ";
 		}
-		int startLimit = request.getPageNumber() * 1; 
-		int endLimit = startLimit + request.getNoOfItems();
 		
-		query+=" limit "+startLimit+","+endLimit;
-//		countQuery+=" limit "+startLimit+","+endLimit;
+		int startLimit = request.getPageNumber() - 1;
+		if(startLimit >= 1) {
+			startLimit = (request.getPageNumber()-1) * request.getNoOfItems();
+			startLimit+=1;
+		}
+		
+		query+=" limit "+startLimit+","+request.getNoOfItems();
 		System.out.println("query "+query);
 		int count = jdbcTemplate.queryForObject(countQuery, Integer.class);
-		System.out.println("count "+count);
 		List<Product> state = jdbcTemplate.query(query, new BeanPropertyRowMapper(Product.class));
 		response.setCount(count);
 		response.setProductList(state);

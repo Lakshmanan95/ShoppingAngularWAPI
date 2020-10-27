@@ -17,7 +17,7 @@ public class Address {
 	private String city;
 	private String state;
 	private String zipCode;
-	private String country;
+	private String phoneNumber;
 	public int getId() {
 		return id;
 	}
@@ -60,12 +60,13 @@ public class Address {
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
-	public String getCountry() {
-		return country;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
-	public void setCountry(String country) {
-		this.country = country;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
+	
 	
 	
 }

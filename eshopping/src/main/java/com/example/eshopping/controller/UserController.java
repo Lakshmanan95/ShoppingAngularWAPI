@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,8 +18,10 @@ import com.example.eshopping.config.JwtTokenUtil;
 import com.example.eshopping.entity.User;
 import com.example.eshopping.model.user.JwtRequest;
 import com.example.eshopping.model.user.JwtResponse;
+import com.example.eshopping.model.user.UpdateUser;
 import com.example.eshopping.model.user.UserListVO;
 import com.example.eshopping.model.user.UserUpdateRequest;
+import com.example.eshopping.model.user.UserUpdateResponse;
 import com.example.eshopping.service.UserService;
 import com.example.eshopping.util.EncryptDecrypt;
 import com.example.eshopping.util.JSONUtil;
@@ -76,7 +80,7 @@ public class UserController {
 		if(userDetails != null) {
 			final String token = jwtTokenUtil.generateToken(userDetails);
 //			Long count = cartService.countCartItemsByUserId(userDetails.getId());
-long count=1;
+			long count=1;
 			return ResponseEntity.ok(new JwtResponse(token, userDetails.getId(), userDetails.getUserName(), userDetails.getLocation()));
 		}
 		else {
@@ -112,5 +116,43 @@ long count=1;
 		return response;
 	}
 	
+	
+	@PostMapping("/profileUpdate")
+	public UserUpdateResponse updateProfile(@RequestBody UpdateUser request) {
+		UserUpdateResponse response = new UserUpdateResponse();
+		try {
+			System.out.println("request "+JSONUtil.toJson(request));
+			User user = userService.findUserById(request.getUser().getId());
+			System.out.println("user "+JSONUtil.toJson(user));
+			user.setFirstName(request.getUser().getFirstName());
+			user.setLastName(request.getUser().getLastName());
+			user.setEmail(request.getUser().getEmail());
+			user.setPhoneNumber(request.getUser().getPhoneNumber());
+			user.setZipCode(request.getUser().getZipCode());
+			userService.saveUser(user);
+			response.setUser(user);
+		}
+		catch(Exception e) {
+			response.setStatus(CommonConstant.ERROR);
+			System.out.println(e);
+			response.setStatusCode(01);
+		}
+		return response;
+	}
+	
+	@PostMapping("getProfile")
+	public UserUpdateResponse getProfile(@RequestBody UpdateUser request) {
+		UserUpdateResponse response = new UserUpdateResponse();
+		try {
+			User user = userService.findUserById(request.getUser().getId());
+			response.setUser(user);
+		}
+		catch(Exception e) {
+			response.setStatus(CommonConstant.ERROR);
+			System.out.println(e);
+			response.setStatusCode(01);
+		}
+		return response;
+	}
 	
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.eshopping.dao.impl.CartDAOImpl;
 import com.example.eshopping.entity.Cart;
 import com.example.eshopping.repo.CartRepository;
 import com.example.eshopping.service.CartService;
@@ -14,6 +15,9 @@ public class CartServiceImpl implements CartService{
 
 	@Autowired
 	CartRepository cartRepository;
+	
+	@Autowired
+	CartDAOImpl cartDAO;
 	
 	@Override
 	public Cart saveToCart(Cart cart) {
@@ -36,7 +40,9 @@ public class CartServiceImpl implements CartService{
 	}
 	
 	@Override
-	public Cart findByUserIdAndProductId(int userId, int productId) {
-		return this.cartRepository.findByUserIdAndProductId(userId, productId);
+	public Cart findByUserIdAndProductId(int productId, int userId) {
+		return cartDAO.findByProductandUserId(productId, userId);
 	}
+	
+	
 }

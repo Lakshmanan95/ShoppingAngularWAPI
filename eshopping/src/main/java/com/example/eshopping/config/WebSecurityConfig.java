@@ -14,11 +14,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer{
 
 	@Autowired
 	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -29,10 +31,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private JwtRequestFilter jwtRequestFilter;
 
-//	@Override
-//	 public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**");
-//    }
+	@Override
+	 public void addCorsMappings(CorsRegistry registry) {
+		registry.addMapping("/*")
+		.allowedOrigins("http://localhost:4200")
+        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS");
+    }
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -59,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable()
 				// dont authenticate this particular request
 				.authorizeRequests().antMatchers("/product/getProductById/{id}","/product/getProducts",
-						"/product/suggestion","/user/**").permitAll().
+						"/product/suggestion","/user/**","/defaultData/**","/cart/**").permitAll().
 				// all other requests need to be authenticated
 				anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to

@@ -3,11 +3,13 @@ package com.example.eshopping.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.example.eshopping.entity.Address;
 import com.example.eshopping.repo.AddressRepository;
 import com.example.eshopping.service.AddressService;
 
+@Service
 public class AddressServiceImpl implements AddressService{
 
 	@Autowired

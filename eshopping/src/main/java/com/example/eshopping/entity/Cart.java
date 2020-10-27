@@ -6,7 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Cart {
+public class Cart implements Cloneable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,6 +16,10 @@ public class Cart {
 	private double price;
 	private int quantity;
 	private int userId;
+	private String description;
+	private String createdDate;
+	private boolean externalShop;
+	private String location;
 	
 	public int getId() {
 		return id;
@@ -53,6 +57,35 @@ public class Cart {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
+	}
 	
+	
+	public boolean getExternalShop() {
+		return externalShop;
+	}
+	public void setExternalShop(boolean externalShop) {
+		this.externalShop = externalShop;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	@Override
+	 public Object clone() throws CloneNotSupportedException {
+	        return super.clone();
+	    }
 	
 }
