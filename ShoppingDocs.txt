@@ -1,0 +1,11 @@
+Steps to follow before running:
+
+1.git pull origin master
+2.Github credintials while pull:
+username: luxdlakshmanan@gmail.com
+password: thinkFuture@95
+
+3.Check for mysql password in application.properties:
+
+spring.datasource.username=root
+spring.datasource.password=root
