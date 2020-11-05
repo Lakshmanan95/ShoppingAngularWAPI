@@ -18,7 +18,7 @@ public class UserDAOImpl {
 	
 	public User getUserById(int id) {
 		String query = "select id, first_name, last_name, email, phone_number, location, zip_code, role_id from user where id="+id;
-		User user = (User) jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper(User.class));
+		User user = (User) jdbcTemplate.query(query, new BeanPropertyRowMapper(User.class));
 		return user;
 	}
 }

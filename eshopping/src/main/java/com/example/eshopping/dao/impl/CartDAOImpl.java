@@ -18,7 +18,7 @@ public class CartDAOImpl {
 	
 	public Cart findByProductandUserId(int productId, int userId) {
 		String query = "select * from cart where product_id="+productId+" and user_id="+userId;
-		Cart cart = (Cart) jdbcTemplate.queryForObject(query, new BeanPropertyRowMapper(Cart.class));
+		Cart cart = (Cart) jdbcTemplate.query(query, new BeanPropertyRowMapper(Cart.class));
 		System.out.println("dao cart "+cart);
 		return cart;
 	}

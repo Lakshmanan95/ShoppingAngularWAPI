@@ -42,10 +42,11 @@ public class CartController {
 			Product product = productService.getProductById(request.getProductId());
 			System.out.println(JSONUtil.toJson(product));
 			List<Cart> cartListValue = cartService.getCartByUserId(request.getUserId());
+//			Cart cart = cartService.findByUserIdAndProductId(request.getProductId(),request.getUserId());
 			Cart cart = new Cart();
 			for(Cart cartDetails : cartListValue) {
 				if(cartDetails.getProductId() == request.getProductId()) {
-					cart = (Cart) cartDetails.clone();
+					cart.setId(cartDetails.getId());
 				}else {
 					cart = null;
 				}
@@ -54,12 +55,13 @@ public class CartController {
 			System.out.println(JSONUtil.toJson(cart));
 			if(cart == null) {
 				cart = new Cart();
+				cart.setQuantity(request.getQuantity());
 			}			
 			System.out.println(" "+request.getQuantity()+" quantity "+ product.getQuantity());
 			cart.setPrice(request.getPrice());
 			cart.setProductId(request.getProductId());
 			cart.setProductName(request.getProductName());
-			cart.setQuantity(request.getQuantity());
+			cart.setQuantity(cart.getQuantity() + request.getQuantity());
 			cart.setUserId(request.getUserId());
 			cart.setDescription(product.getDescription());
 			cart.setCreatedDate(DateTimeUtil.getDateAndTime());
@@ -72,7 +74,7 @@ public class CartController {
 				return response;
 			}
 			cartService.saveToCart(cart);
-			int updateQuantity = product.getQuantity() - cart.getQuantity();
+			int updateQuantity = product.getQuantity() - request.getQuantity();
 			product.setQuantity(updateQuantity);
 			productService.saveProduct(product);
 			List<Cart> cartList = cartService.getCartByUserId(request.getUserId());
