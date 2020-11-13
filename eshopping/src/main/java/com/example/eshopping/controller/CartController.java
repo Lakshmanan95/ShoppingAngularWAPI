@@ -66,7 +66,7 @@ public class CartController {
 			cart.setDescription(product.getDescription());
 			cart.setCreatedDate(DateTimeUtil.getDateAndTime());
 			cart.setExternalShop(product.isExternalShop());
-			cart.setLocation(product.getLocation());
+			cart.setLocation(request.getLocation());
 			System.out.println(" "+request.getQuantity()+" quantity "+ product.getQuantity());
 			if(request.getQuantity() > product.getQuantity()) {
 				response.setStatus(CommonConstant.ERROR);

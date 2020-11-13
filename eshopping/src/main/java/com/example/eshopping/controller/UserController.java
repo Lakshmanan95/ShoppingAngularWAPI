@@ -144,6 +144,7 @@ public class UserController {
 	public UserUpdateResponse getProfile(@RequestBody UpdateUser request) {
 		UserUpdateResponse response = new UserUpdateResponse();
 		try {
+			System.out.println("request "+JSONUtil.toJson(request));
 			User user = userService.findUserById(request.getUser().getId());
 			response.setUser(user);
 		}

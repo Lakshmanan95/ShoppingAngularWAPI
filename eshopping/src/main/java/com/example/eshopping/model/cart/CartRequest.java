@@ -8,6 +8,7 @@ public class CartRequest {
 	private String productName;
 	private double price;
 	private int quantity;
+	private String location;
 	public int getId() {
 		return id;
 	}
@@ -43,6 +44,12 @@ public class CartRequest {
 	}
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
 	}
 	
 	
